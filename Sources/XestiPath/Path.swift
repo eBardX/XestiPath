@@ -54,8 +54,8 @@ extension Path: Equatable {
 // MARK: - Hashable
 
 extension Path: Hashable {
-    public var hashValue: Int {
-        return rawValue.hashValue
+    public func hash(into hasher: inout Hasher) {
+        rawValue.hash(into: &hasher)
     }
 }
 
