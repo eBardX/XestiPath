@@ -1,4 +1,4 @@
-// © 2018 J. G. Pusey (see LICENSE.md)
+// © 2018–2022 J. G. Pusey (see LICENSE.md)
 
 import Foundation
 
@@ -7,44 +7,44 @@ public extension Path {
     // MARK: Public Type Properties
 
     static var currentDirectory: Path {
-        get { return .init(Path.fileManager.currentDirectoryPath) }
+        get { .init(Path.fileManager.currentDirectoryPath) }
         set { Path.fileManager.changeCurrentDirectoryPath(newValue.rawValue) }
     }
 
     // MARK: Public Instance Properties
 
     var componentsToDisplay: [String]? {
-        return Path.fileManager.componentsToDisplay(forPath: rawValue)
+        Path.fileManager.componentsToDisplay(forPath: rawValue)
     }
 
     var displayName: String {
-        return Path.fileManager.displayName(atPath: rawValue)
+        Path.fileManager.displayName(atPath: rawValue)
     }
 
     var exists: Bool {
-        return Path.fileManager.fileExists(atPath: rawValue)
+        Path.fileManager.fileExists(atPath: rawValue)
     }
 
     var isDeletable: Bool {
-        return Path.fileManager.isDeletableFile(atPath: rawValue)
+        Path.fileManager.isDeletableFile(atPath: rawValue)
     }
 
     var isExecutable: Bool {
-        return Path.fileManager.isExecutableFile(atPath: rawValue)
+        Path.fileManager.isExecutableFile(atPath: rawValue)
     }
 
     var isReadable: Bool {
-        return Path.fileManager.isReadableFile(atPath: rawValue)
+        Path.fileManager.isReadableFile(atPath: rawValue)
     }
 
     var isWritable: Bool {
-        return Path.fileManager.isWritableFile(atPath: rawValue)
+        Path.fileManager.isWritableFile(atPath: rawValue)
     }
 
     // MARK: Public Instance Methods
 
     func attributes() throws -> Attributes {
-        return .init(try Path.fileManager.attributesOfItem(atPath: rawValue))
+        .init(try Path.fileManager.attributesOfItem(atPath: rawValue))
     }
 
     func copy(to destination: Path) throws {
@@ -61,9 +61,9 @@ public extension Path {
 
     func createFile(contents: Data? = nil,
                     attributes: Attributes? = nil) -> Bool {
-        return Path.fileManager.createFile(atPath: rawValue,
-                                           contents: contents,
-                                           attributes: attributes?.dictionaryRepresentation)
+        Path.fileManager.createFile(atPath: rawValue,
+                                    contents: contents,
+                                    attributes: attributes?.dictionaryRepresentation)
     }
 
     func createSymbolicLink(to destination: Path) throws {
@@ -76,9 +76,9 @@ public extension Path {
 
         if dstPath.isAbsolute {
             return dstPath
-        } else {
-            return appendingComponent("..") + dstPath
         }
+
+        return appendingComponent("..") + dstPath
     }
 
     func link(to destination: Path) throws {

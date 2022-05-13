@@ -1,4 +1,4 @@
-// © 2018 J. G. Pusey (see LICENSE.md)
+// © 2018–2022 J. G. Pusey (see LICENSE.md)
 
 import Foundation
 
@@ -23,7 +23,7 @@ public final class Path: RawRepresentable {
     public let rawValue: String
 
     public var fileURL: URL {
-        return URL(fileURLWithPath: rawValue)
+        URL(fileURLWithPath: rawValue)
     }
 }
 
@@ -31,7 +31,7 @@ public final class Path: RawRepresentable {
 
 extension Path: Comparable {
     public static func < (lhs: Path, rhs: Path) -> Bool {
-        return lhs.rawValue < rhs.rawValue
+        lhs.rawValue < rhs.rawValue
     }
 }
 
@@ -39,7 +39,7 @@ extension Path: Comparable {
 
 extension Path: CustomStringConvertible {
     public var description: String {
-        return rawValue
+        rawValue
     }
 }
 
@@ -47,7 +47,7 @@ extension Path: CustomStringConvertible {
 
 extension Path: Equatable {
     public static func == (lhs: Path, rhs: Path) -> Bool {
-        return lhs.rawValue == rhs.rawValue
+        lhs.rawValue == rhs.rawValue
     }
 }
 
@@ -66,9 +66,8 @@ public extension Path {
     // MARK: Public Type Methods
 
     static func + (lhs: Path, rhs: Path) -> Path {
-        guard
-            !rhs.isAbsolute
-            else { return rhs }
+        guard !rhs.isAbsolute
+        else { return rhs }
 
         return Path(lhs.rawValue + "/" + rhs.rawValue)
     }

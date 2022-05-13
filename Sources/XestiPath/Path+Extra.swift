@@ -1,4 +1,4 @@
-// © 2018 J. G. Pusey (see LICENSE.md)
+// © 2018–2022 J. G. Pusey (see LICENSE.md)
 
 import Foundation
 
@@ -7,11 +7,11 @@ public extension Path {
     // MARK: Public Type Properties
 
     static var temporaryDirectory: Path {
-        return Path(NSTemporaryDirectory())
+        Path(NSTemporaryDirectory())
     }
 
     static var uniqueTemporaryDirectory: Path {
-        return temporaryDirectory.appendingComponent(ProcessInfo.processInfo.globallyUniqueString)
+        temporaryDirectory.appendingComponent(ProcessInfo.processInfo.globallyUniqueString)
     }
 
     // MARK: Public Type Methods
@@ -23,15 +23,13 @@ public extension Path {
 
         let flags = GLOB_BRACE | GLOB_MARK | GLOB_TILDE
 
-        guard
-            Darwin.glob(pattern, flags, nil, &gt) == 0
-            else { return [] }
+        guard Darwin.glob(pattern, flags, nil, &gt) == 0
+        else { return [] }
 
         return (0..<Int(gt.gl_matchc)).compactMap {
-            guard
-                let rawPath = gt.gl_pathv[$0],
-                let path = String(validatingUTF8: rawPath)
-                else { return nil }
+            guard let rawPath = gt.gl_pathv[$0],
+                  let path = String(validatingUTF8: rawPath)
+            else { return nil }
 
             return Path(path)
         }
@@ -54,18 +52,18 @@ public extension Path {
     }
 
     var kind: Kind {
-        return (try? attributes().kind) ?? .unknown
+        (try? attributes().kind) ?? .unknown
     }
 
     // MARK: Public Instance Methods
 
     func match(pattern: String) -> [Path] {
-        return Path.match(pattern: (self + Path(pattern)).rawValue)
+        Path.match(pattern: (self + Path(pattern)).rawValue)
     }
 
     func readData(options: Data.ReadingOptions = []) throws -> Data {
-        return try Data(contentsOf: fileURL,
-                        options: options)
+        try Data(contentsOf: fileURL,
+                 options: options)
     }
 
     func writeData(_ data: Data,
