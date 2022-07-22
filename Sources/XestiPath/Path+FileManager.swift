@@ -47,6 +47,15 @@ public extension Path {
         .init(try Path.fileManager.attributesOfItem(atPath: rawValue))
     }
 
+    func contentsOfDirectory(includingPropertiesForKeys keys: [URLResourceKey]? = nil,
+                             options: FileManager.DirectoryEnumerationOptions = []) throws -> [Path] {
+        try Path.fileManager.contentsOfDirectory(at: fileURL,
+                                                 includingPropertiesForKeys: keys,
+                                                 options: options).map {
+            Path($0.path)
+        }
+    }
+
     func copy(to destination: Path) throws {
         try Path.fileManager.copyItem(at: fileURL,
                                       to: destination.fileURL)

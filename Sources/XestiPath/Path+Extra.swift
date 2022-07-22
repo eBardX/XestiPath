@@ -66,6 +66,24 @@ public extension Path {
                  options: options)
     }
 
+    func totalSize() throws -> UInt64 {
+        let attrs = try attributes()
+
+        if attrs.kind != .directory {
+            return attrs.size ?? 0
+        }
+
+        var size: UInt64 = 0
+
+        let children = try contentsOfDirectory()
+
+        for child in children {
+            size += try child.totalSize()
+        }
+
+        return size
+    }
+
     func writeData(_ data: Data,
                    options: Data.WritingOptions = []) throws {
         try data.write(to: fileURL,
