@@ -104,6 +104,31 @@ public extension Path {
         try Path.fileManager.removeItem(at: fileURL)
     }
 
+    func replace(with replacement: Path,
+                 backup: Path? = nil,
+                 usingNewMetaDataOnly: Bool = false,
+                 withoutDeletingBackupItem: Bool = false) throws -> Path {
+        var options: FileManager.ItemReplacementOptions = []
+
+        if (usingNewMetaDataOnly) {
+            options.formUnion(.usingNewMetadataOnly)
+        }
+
+        if (withoutDeletingBackupItem) {
+            options.formUnion(.withoutDeletingBackupItem)
+        }
+
+        var resultURL: NSURL?
+
+        try Path.fileManager.replaceItem(at: fileURL,
+                                         withItemAt: replacement.fileURL,
+                                         backupItemName: backup?.rawValue,
+                                         options: options,
+                                         resultingItemURL: &resultURL)
+
+        return Path(resultURL?.path ?? "")
+    }
+
     func setAttributes(_ attributes: Attributes) throws {
         try Path.fileManager.setAttributes(attributes.dictionaryRepresentation,
                                            ofItemAtPath: rawValue)
