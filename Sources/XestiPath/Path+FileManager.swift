@@ -110,11 +110,11 @@ public extension Path {
                  withoutDeletingBackupItem: Bool = false) throws -> Path {
         var options: FileManager.ItemReplacementOptions = []
 
-        if (usingNewMetaDataOnly) {
+        if usingNewMetaDataOnly {
             options.formUnion(.usingNewMetadataOnly)
         }
 
-        if (withoutDeletingBackupItem) {
+        if withoutDeletingBackupItem {
             options.formUnion(.withoutDeletingBackupItem)
         }
 
